@@ -1,0 +1,319 @@
+/* Akram 20260115 - 15:35 */
+
+/* =========================
+   Error styling
+   ========================= */
+.error {
+  color: #d3080c;
+  font-weight: bold;
+}
+
+.form-control.error {
+  border-color: #d3080c;
+  box-shadow: 0 0 3px #d3080c;
+}
+
+/* Power Pages required label patch: prevent extra content */
+.crmEntityFormView .cell div.table-info.required label:after {
+  content: ' ';
+}
+
+/* Keep red frame while invalid (error state) — even on focus */
+input.error,
+select.error,
+textarea.error,
+.form-control.error,
+input.error:focus,
+select.error:focus,
+textarea.error:focus,
+.form-control.error:focus {
+  border-color: #d3080c !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 2px rgba(211, 8, 12, 0.25) !important;
+}
+
+.has-error .form-control,
+.has-error .form-control:focus {
+  border-color: #d3080c !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 2px rgba(211, 8, 12, 0.25) !important;
+}
+
+
+/* =========================
+   Datetimepicker icon inside field
+   ========================= */
+.input-group.datetimepicker.pp-inside {
+  position: relative;
+  overflow: visible !important;
+}
+
+.input-group.datetimepicker.pp-inside > input.form-control {
+  padding-right: 2.5rem !important;
+}
+
+.input-group.datetimepicker.pp-inside > .input-group-addon.btn {
+  position: absolute !important;
+  top: 50%;
+  right: .5rem;
+  transform: translateY(-50%);
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.input-group.datetimepicker.pp-inside .fa,
+.input-group.datetimepicker.pp-inside .icon-calendar {
+  font-size: 14px;
+  line-height: 1;
+  color: #6c757d !important;
+}
+
+.input-group.datetimepicker.pp-inside .iconBorder {
+  border: 0 !important;
+  background: none !important;
+}
+
+
+/* =========================
+   Native date placeholder hiding (Chromium/WebKit)
+   ========================= */
+input[type="date"]:required:invalid::-webkit-datetime-edit,
+input[type="date"]:required:invalid::-webkit-datetime-edit-year-field,
+input[type="date"]:required:invalid::-webkit-datetime-edit-month-field,
+input[type="date"]:required:invalid::-webkit-datetime-edit-day-field,
+input[type="date"]:required:invalid::-webkit-datetime-edit-text {
+  color: transparent;
+}
+
+input[type="date"]:focus::-webkit-datetime-edit,
+input[type="date"]:valid::-webkit-datetime-edit {
+  color: inherit;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator { opacity: 1; }
+
+
+/* =========================
+   Link underlines (content only)
+   ========================= */
+main a[href]:not(.btn):not([role="button"]),
+#wb-main a[href]:not(.btn):not([role="button"]),
+.container a[href]:not(.btn):not([role="button"]) {
+  text-decoration-line: underline !important;
+  text-underline-offset: 0.12em;
+  text-decoration-skip-ink: auto;
+}
+
+main a[href]:not(.btn):not([role="button"]):hover,
+main a[href]:not(.btn):not([role="button"]):focus,
+main a[href]:not(.btn):not([role="button"]):active {
+  text-decoration-line: underline !important;
+}
+
+.breadcrumb > li > a {
+  text-decoration-line: underline !important;
+}
+
+.nav > li > a,
+.nav .show.dropdown-menu > li > a,
+.dropdown-menu > li > a {
+  text-decoration: none !important;
+}
+
+
+/* =========================
+   Full-width controls (Step 2/3/4 fix)
+   ========================= */
+.crmEntityFormView .form-control-cell .control {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Make text/select/textarea fill the cell (exclude radio/checkbox/file + hidden datetime binding) */
+.crmEntityFormView .form-control-cell .control input.form-control:not(.datetime):not([type="radio"]):not([type="checkbox"]):not([type="file"]),
+.crmEntityFormView .form-control-cell .control textarea.form-control,
+.crmEntityFormView .form-control-cell .control select.form-control {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SELECT: keep arrow centered (supports <i>, <span class="fa">, etc.)
+   Fixes “caret shifted” by ensuring appearance:none applies even if DOM
+   isn’t direct-child, and centering icon with top:0/bottom:0 flex.
+   ========================================================= */
+.select-icon {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* IMPORTANT: use descendant selector, not only direct-child */
+.select-icon select {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+
+  padding-right: 2.75rem; /* room for the icon */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none !important;
+}
+
+/* IE/old Edge */
+.select-icon select::-ms-expand { display: none; }
+
+/* Center any icon you append (direct child or nested) */
+.select-icon i,
+.select-icon .fa,
+.select-icon span.fa,
+.select-icon span.glyphicon {
+  position: absolute;
+  right: 0.75rem;
+  top: 0;
+  bottom: 0;
+  width: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+  color: #555;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+
+/* =======================================================================
+   Power Pages file upload layout (stable with JS relabel/toggle)
+   Goal order: Choose/Change -> Filename/Status -> Delete
+   - Inline when space permits
+   - Responsive wrap when tight (filename under button; delete under filename)
+   - Do NOT force Delete visibility (your JS already controls it)
+   ======================================================================= */
+
+.crmEntityFormView .file-control-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Ensure button container never becomes 100% width due to legacy rules */
+.crmEntityFormView .file-control-container .container-file-input {
+  flex: 0 0 auto;
+  width: auto !important;
+  min-width: 0;
+}
+
+/* The “status + delete” group should stay on the same line as the button
+   whenever possible (fixes: “No file selected” dropping under after delete) */
+.crmEntityFormView .file-control-container .file-link-and-delete {
+  flex: 1 1 0;
+  width: auto !important;
+  min-width: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: flex-start !important;
+}
+
+/* Filename/status should sit BETWEEN the buttons.
+   Let it size to its content (so it won’t wrap early),
+   but still allow shrinking/wrapping when the layout is truly tight. */
+.crmEntityFormView .file-control-container .file-name-container {
+  flex: 0 1 auto;          /* key change: no fixed 14rem basis */
+  min-width: 0;
+  max-width: 100%;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+/* Important: make the visible status text inline by default
+   (prevents “No file selected” from behaving like a full-row block) */
+.crmEntityFormView .file-control-container .file-name-container > div {
+  display: inline;
+  margin: 0;
+}
+
+/* Keep the wrapper that contains the delete button “last” */
+.crmEntityFormView .file-control-container .file-link-and-delete > div:not(.file-name-container) {
+  flex: 0 0 auto;
+}
+
+/* Defensive: prevent accidental auto-margins pushing Delete away */
+.crmEntityFormView .file-control-container .file-link-and-delete > div:last-child {
+  margin-left: 0 !important;
+}
+
+/* =========================
+   Delete button look (match Choose/Change btn-default) + spacing
+   ========================= */
+.crmEntityFormView button.btn.btn-default.btn-for-delete,
+.crmEntityFormView button.btn.btn-default.btn-for-delete.btn-without-border {
+  border: 1px solid #adadad !important;
+  border-radius: 4px !important;
+
+  background-color: #f5f5f5 !important;
+  background-image: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%) !important;
+
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075) !important;
+  text-shadow: 0 1px 0 #fff;
+
+  padding: 6px 12px !important;
+  line-height: 1.42857143 !important;
+  white-space: nowrap;
+}
+
+.crmEntityFormView button.btn.btn-default.btn-for-delete:hover,
+.crmEntityFormView button.btn.btn-default.btn-for-delete.btn-without-border:hover {
+  background-color: #e6e6e6 !important;
+  background-image: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 100%) !important;
+}
+
+/* Space between icon and label */
+.crmEntityFormView .btn-for-delete .fa {
+  margin-right: 0.45rem !important;
+}
+
+/* Pressed state */
+.crmEntityFormView button.btn.btn-default.btn-for-delete:active,
+.crmEntityFormView button.btn.btn-default.btn-for-delete.active {
+  background-image: none !important;
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125) !important;
+}
+
+
+/* Responsive: when narrow (including 200% zoom + shrunk), stack under the button */
+@media (max-width: 768px) {
+  .crmEntityFormView .file-control-container .file-link-and-delete {
+    flex-basis: 100%;
+  }
+  .crmEntityFormView .file-control-container .file-name-container {
+    flex-basis: 100%;
+  }
+  .crmEntityFormView .file-control-container .file-name-container > div {
+    display: block;
+  }
+}

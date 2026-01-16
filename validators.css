@@ -1,0 +1,368 @@
+/**
+ * validators.css
+ * Form validation states, radio groups, file uploads, date/time pickers
+ *
+ * Cleaning goals:
+ *  - Remove duplicate/conflicting blocks (especially Validation Summary link focus rules).
+ *  - Preserve accessibility fixes (wrapping, error states, SR-only helpers, focus handling).
+ */
+/* Akram 20260114 21:15 */
+
+/* ==================== TOKENS ==================== */
+:root{
+  /* GCWeb defaults (fallbacks used if your theme variables are missing) */
+  --pp-link-default: #295376;
+  --pp-link-hover:   #0535d2;
+  --pp-focus-ring:   var(--focus-color, #1a5a96); /* GCWeb blue fallback */
+  --pp-radio-focus:  var(--focus-color, #1a5a96);
+}
+
+/* ==================== INLINE ERROR MESSAGES ==================== */
+
+/* Let the container shrink so children can wrap in Safari (flex/table quirk). */
+.table-info,
+.table-info > label,
+.table-info .field-label,
+.form-control-cell,
+.form-group {
+  min-width: 0;
+}
+
+/* Cross-browser Label wrapping for inline error pills */
+.label.wrapped,
+span.wrapped {
+  display: block;                    /* occupy the full line under the label */
+  max-width: 100%;
+  white-space: normal !important;    /* defeat Bootstrap nowrap */
+
+  /* Cross-browser wrapping for long tokens/URLs on Safari/iOS + others */
+  overflow-wrap: anywhere;           /* modern */
+  word-wrap: break-word;             /* legacy alias */
+  word-break: break-word;            /* WebKit/Safari quirk fallback */
+  hyphens: auto;
+
+  text-align: left;
+  padding: 5px;
+}
+
+/* Increase only inline validation error text under field labels */
+.form-group label > .label.label-danger.wrapped,
+[id$="_label"] > .label.label-danger.wrapped {
+  font-size: 14px;
+  line-height: 1.35;
+  padding: 0.25em 0.5em;
+}
+
+/* Optional: slightly larger on very small screens */
+@media (max-width: 480px) {
+  .form-group label > .label.label-danger.wrapped,
+  [id$="_label"] > .label.label-danger.wrapped {
+    font-size: 17px;
+  }
+}
+
+/* Screen-reader-only helper (if needed) */
+.sr-only-validation {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==================== DATE/TIME PICKER ERROR STATES ==================== */
+
+/* Hide bound input (accessibility-friendly method, PP date wrapper) */
+.control > input.datetime.form-control {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Paint the visible PP date/time input when invalid */
+.form-control-cell .input-group.datetimepicker input.form-control.error,
+.form-control-cell .input-group.datetimepicker input.input-text-box.error,
+.form-control-cell .input-group.datetimepicker input[aria-invalid="true"] {
+  border-color: var(--error-color);
+  box-shadow: var(--error-shadow);
+}
+
+/* Keep it red while focused */
+.form-control-cell .input-group.datetimepicker input.form-control.error:focus,
+.form-control-cell .input-group.datetimepicker input.input-text-box.error:focus,
+.form-control-cell .input-group.datetimepicker input[aria-invalid="true"]:focus {
+  border-color: var(--error-color);
+  box-shadow: var(--error-shadow);
+  outline: none;
+}
+
+/* Wrapper error classes (cell-level) */
+.form-control-cell.error .input-group.datetimepicker input.form-control,
+.form-control-cell.has-error .input-group.datetimepicker input.form-control,
+.form-control-cell.error .input-group.datetimepicker input.input-text-box,
+.form-control-cell.has-error .input-group.datetimepicker input.input-text-box {
+  border-color: var(--error-color);
+  box-shadow: var(--error-shadow);
+}
+
+/* ==================== FILE UPLOAD CONTROLS ==================== */
+/* NOTE: File-upload *layout/reflow* is handled in custom.css.
+   This file only keeps semantic visuals (clickable filename, error text, touch targets). */
+
+.file-name--clickable {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #101010;            /* accessibility wants #101010 base colour */
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Error text under file controls */
+.file-upload-error {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+/* Touch-friendly file buttons */
+@media (pointer: coarse) {
+  .file-control-container button,
+  .container-file-input button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* ==================== WET-PATCHED RADIO GROUPS ==================== */
+
+/* Fieldset & Legend */
+.wet-patched-radio fieldset.wet-radio-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;              /* defeat any right-align at mobile */
+}
+
+.wet-patched-radio fieldset.wet-radio-fieldset > legend {
+  font-size: 16px;
+  color: var(--text-dark);
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 0.25rem 0;
+  padding: 0;
+}
+
+/* Ensure child elements inherit legend styling */
+.wet-patched-radio legend .field-label,
+.wet-patched-radio legend .field-name {
+  font: inherit;
+  color: inherit;
+  font-weight: inherit;
+}
+
+/* Inline layout: "○ No  ○ Yes" (left-aligned, touch-friendly) */
+.wet-patched-radio label.radio-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  white-space: nowrap;
+  margin-right: 1.25rem;         /* gap between “No” and “Yes” */
+  padding: 0 !important;         /* cancel Bootstrap/WET left padding */
+  width: auto !important;        /* avoid 100% width on small screens */
+  float: none !important;        /* defeat any inherited floats */
+  max-width: none;
+}
+
+.wet-patched-radio label.radio-inline input[type="radio"] {
+  position: static;              /* cancel legacy absolute positioning */
+  margin: 0 0.45rem 0 0;
+  vertical-align: middle;
+}
+
+/* Touch-friendly radio padding */
+@media (pointer: coarse) {
+  .wet-patched-radio label.radio-inline {
+    padding: 0.45rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wet-patched-radio label.radio-inline { white-space: normal; }
+}
+
+/* ==================== ERROR STATES (FIELDS & CONTAINERS) ==================== */
+
+/* Standard form control error look */
+.form-control.error,
+input.error,
+select.error,
+textarea.error {
+  border-color: var(--error-color);
+  box-shadow: var(--error-shadow);
+  outline: none;
+}
+
+/* Container-level error state */
+.has-error .form-control,
+.has-error .form-control:focus {
+  border-color: var(--error-color);
+  box-shadow: var(--error-shadow);
+}
+
+/* Visible validator text */
+.validators span[id^="RequiredFieldValidator"],
+.validators span[id^="DateFormatValidator"] {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+/* Remove default “*” markers coming from CRM form */
+.crmEntityFormView .control .validators span[style*="color:Red"],
+.crmEntityFormView span[id^="RequiredFieldValidator"],
+.crmEntityFormView span[id^="DateFormatValidator"],
+.crmEntityFormView abbr[title="(required)"],
+.crmEntityFormView .validators span {
+  content: none !important;
+  display: none !important;
+}
+
+/* Compact validators spacing on read-only summary */
+body.read-only-summary .crmEntityFormView .table-info .validators {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ==================== ACCESSIBLE FOCUS VISUALS ==================== */
+/* 1) Validation summary links (WET/GCWeb exact ring; no box-shadows) */
+
+#ValidationSummaryEntityFormView {
+  scroll-margin-top: 90px;
+}
+
+#ValidationSummaryEntityFormView ul li a {
+  color: var(--pp-link-default);
+  text-decoration: underline;
+}
+
+#ValidationSummaryEntityFormView ul li a:hover,
+#ValidationSummaryEntityFormView ul li a:active {
+  color: var(--pp-link-hover);
+  outline: none;
+  box-shadow: none;
+}
+
+#ValidationSummaryEntityFormView ul li a:focus,
+#ValidationSummaryEntityFormView ul li a:focus-visible {
+  color: var(--pp-link-hover);
+  outline: 3px solid var(--pp-focus-ring);
+  outline-offset: 2px;
+  box-shadow: none;              /* remove any global focus shadow */
+  border-radius: 4px;
+}
+
+@media (forced-colors: active) {
+  #ValidationSummaryEntityFormView ul li a:focus,
+  #ValidationSummaryEntityFormView ul li a:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+}
+
+/* 2) Radios: focus only the circle (no group/label rings) */
+
+/* Kill group/label outlines from other styles (patched & legacy groups) */
+.wet-patched-radio fieldset.wet-radio-fieldset:focus-within,
+.wet-patched-radio label.radio-inline:focus-within,
+.boolean-radio:focus-within,
+.boolean-radio input[type="radio"]:focus-visible + label,
+.form-check-input[type="radio"]:focus-visible + label {
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Remove any outer outline/shadow from the radio control itself */
+.wet-patched-radio input[type="radio"]:focus,
+.wet-patched-radio input[type="radio"]:focus-visible,
+.boolean-radio input[type="radio"]:focus,
+.boolean-radio input[type="radio"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Tint only the native radio circle */
+.wet-patched-radio input[type="radio"]:focus-visible,
+.boolean-radio input[type="radio"]:focus-visible {
+  accent-color: var(--pp-radio-focus);
+}
+
+@supports not selector(:focus-visible) {
+  .wet-patched-radio input[type="radio"]:focus,
+  .boolean-radio input[type="radio"]:focus {
+    accent-color: var(--pp-radio-focus);
+  }
+}
+
+/* High-contrast: defer to OS palette */
+@media (forced-colors: active) {
+  .wet-patched-radio input[type="radio"],
+  .boolean-radio input[type="radio"] {
+    accent-color: ButtonText;
+  }
+}
+
+/* =======================
+   Read-only (review) radios: greyed UI + keep tabbable
+   ======================= */
+
+body.read-only-summary {
+  /* choose accessible greys; keep >=4.5:1 contrast on white */
+  --pp-disabled-fg: #6c757d;      /* label text */
+  --pp-radio-disabled: #adb5bd;   /* radio circle */
+}
+
+body.read-only-summary .boolean-radio.readonly label,
+body.read-only-summary .wet-patched-radio label {
+  color: var(--pp-disabled-fg);
+  cursor: default;
+}
+
+body.read-only-summary .boolean-radio.readonly input[type="radio"],
+body.read-only-summary .wet-patched-radio input[type="radio"] {
+  accent-color: var(--pp-radio-disabled);
+  pointer-events: auto; /* keep keyboard focus */
+}
+
+body.read-only-summary .boolean-radio.readonly input[type="radio"]:focus-visible,
+body.read-only-summary .wet-patched-radio input[type="radio"]:focus-visible {
+  accent-color: var(--pp-radio-focus);   /* blue only on focus */
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any group/label focus frames in read-only mode */
+body.read-only-summary .boolean-radio:focus-within,
+body.read-only-summary .wet-patched-radio fieldset.wet-radio-fieldset:focus-within,
+body.read-only-summary .wet-patched-radio label.radio-inline:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+@media (forced-colors: active) {
+  body.read-only-summary .boolean-radio.readonly input[type="radio"],
+  body.read-only-summary .wet-patched-radio input[type="radio"] {
+    accent-color: ButtonText;
+  }
+}
