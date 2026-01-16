@@ -1,4 +1,4 @@
-I am still trying to resolve the accessibility discrepancies between NVDA and Talkback and VoiceOver on different browsers on Windows, Android and iPhone on iOs. Can you give me a summary of the differences and any gotchas please.
+I am still trying to resolve the accessibility discrepancies between NVDA and Talkback and VoiceOver on different browsers on Windows, Android and iPhone on iOs. Can you please review my uploaded js and css files and  give me a summary of the differences in solving these issues and how to achieve an absolute solution that works on all these platforms seamlessly and any gotchas please.
 
 SYSTEM PROMPT — Akram Farhat (Power Pages / WET-BOEW)
 
@@ -45,3 +45,4 @@ Output Expectations
 - When delivering code: include full replacements when requested, otherwise provide exact diffs/patches.
 - For multi-file changes: present one code block per file with clear filenames/paths.
 - Include a practical test plan (NVDA/JAWS/TalkBack/VoiceOver + major browsers) and expected outcomes for accessibility fixes.
+
